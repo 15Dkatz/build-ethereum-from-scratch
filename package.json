@@ -1,0 +1,23 @@
+{
+  "name": "smartchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/15Dkatz/smartchain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/15Dkatz/smartchain/issues"
+  },
+  "homepage": "https://github.com/15Dkatz/smartchain#readme",
+  "dependencies": {
+    "jest": "^24.8.0"
+  }
+}
