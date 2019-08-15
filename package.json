@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/15Dkatz/smartchain#readme",
   "dependencies": {
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "js-sha3": "^0.8.0"
   }
 }
