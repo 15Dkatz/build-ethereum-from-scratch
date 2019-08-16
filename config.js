@@ -9,6 +9,11 @@ const GENESIS_DATA = {
   }
 };
 
+const MILLISECONDS = 1;
+const SECONDS = 1000 * MILLISECONDS;
+const MINE_RATE = 13 * SECONDS;
+
 module.exports = {
-  GENESIS_DATA
+  GENESIS_DATA,
+  MINE_RATE
 };
