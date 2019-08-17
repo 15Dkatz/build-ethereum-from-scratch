@@ -22,7 +22,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "jest": "^24.8.0",
-    "js-sha3": "^0.8.0"
+    "js-sha3": "^0.8.0",
+    "pubnub": "^4.25.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
