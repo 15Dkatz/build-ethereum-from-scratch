@@ -9,6 +9,9 @@
     "start": "node ./api",
     "test": "jest --watchAll"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/15Dkatz/smartchain.git"
@@ -21,6 +24,7 @@
   },
   "homepage": "https://github.com/15Dkatz/smartchain#readme",
   "dependencies": {
+    "elliptic": "^6.5.0",
     "express": "^4.17.1",
     "jest": "^24.8.0",
     "js-sha3": "^0.8.0",
