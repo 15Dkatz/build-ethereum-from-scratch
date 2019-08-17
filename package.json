@@ -29,7 +29,8 @@
     "jest": "^24.8.0",
     "js-sha3": "^0.8.0",
     "pubnub": "^4.25.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
