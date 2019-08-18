@@ -10,6 +10,12 @@ class TransactionQueue {
   getTransactionSeries() {
     return Object.values(this.transactionMap);
   }
+
+  clearBlockTransactions({ transactionSeries }) {
+    for (let transaction of transactionSeries) {
+      delete this.transactionMap[transaction.id];
+    }
+  }
 }
 
 module.exports = TransactionQueue;

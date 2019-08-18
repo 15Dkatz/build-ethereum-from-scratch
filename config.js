@@ -5,8 +5,10 @@ const GENESIS_DATA = {
     difficulty: 1,
     number: 0,
     timestamp: '--genesis-timestamp--',
-    nonce: 0
-  }
+    nonce: 0,
+    transactionsRoot: '--genesis-transactions-root-'
+  },
+  transactionSeries: []
 };
 
 const MILLISECONDS = 1;
