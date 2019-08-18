@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const request = require('request');
 const Account = require('../account');
 const Blockchain = require('../blockchain');
@@ -8,13 +9,17 @@ const Transaction = require('../transaction');
 const TransactionQueue = require('../transaction/transaction-queue');
 
 const app = express();
+app.use(bodyParser.json());
+
 const blockchain = new Blockchain();
 const transactionQueue = new TransactionQueue();
-const pubsub = new PubSub({ blockchain });
+const pubsub = new PubSub({ blockchain, transactionQueue });
 const account = new Account();
 const transaction = Transaction.createTransaction({ account });
 
-transactionQueue.add(transaction);
+setTimeout(() => {
+  pubsub.broadcastTransaction(transaction);
+}, 500);
 
 app.get('/blockchain', (req, res, next) => {
   const { chain } = blockchain;
@@ -36,6 +41,19 @@ app.get('/blockchain/mine', (req, res, next) => {
       res.json({ block });
     })
     .catch(next);
+});
+
+app.post('/account/transact', (req, res, next) => {
+  const { to, value } = req.body;
+  const transaction = Transaction.createTransaction({
+    account: !to ? new Account() : account,
+    to,
+    value
+  });
+
+  pubsub.broadcastTransaction(transaction);
+
+  res.json({ transaction });
 });
 
 app.use((err, req, res, next) => {
