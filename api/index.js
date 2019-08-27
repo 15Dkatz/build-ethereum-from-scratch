@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const state = new State();
-const blockchain = new Blockchain();
+const blockchain = new Blockchain({ state });
 const transactionQueue = new TransactionQueue();
 const pubsub = new PubSub({ blockchain, transactionQueue });
 const account = new Account();
@@ -58,6 +58,17 @@ app.post('/account/transact', (req, res, next) => {
   pubsub.broadcastTransaction(transaction);
 
   res.json({ transaction });
+});
+
+app.get('/account/balance', (req, res, next) => {
+  const { address } = req.query;
+
+  const balance = Account.calculateBalance({
+    address: address || account.address,
+    state
+  });
+
+  res.json({ balance });
 });
 
 app.use((err, req, res, next) => {

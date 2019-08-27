@@ -9,7 +9,7 @@ class State {
     this.stateTrie.put({ key: address, value: accountData });
   }
 
-  getaccount({ address }) {
+  getAccount({ address }) {
     return this.stateTrie.get({ key: address });
   }
 

@@ -1,5 +1,6 @@
 const { GENESIS_DATA, MINE_RATE } = require('../config');
 const { keccakHash } = require('../util');
+const Transaction = require('../transaction');
 
 const HASH_LENGTH = 64;
 const MAX_HASH_VALUE = parseInt('f'.repeat(HASH_LENGTH), 16);
@@ -113,6 +114,12 @@ class Block {
 
       return resolve();
     });
+  }
+
+  static runBlock({ block, state }) {
+    for (let transaction of block.transactionSeries) {
+      Transaction.runTransaction({ transaction, state });
+    }
   }
 }
 
