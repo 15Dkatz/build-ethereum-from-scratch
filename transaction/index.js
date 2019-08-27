@@ -40,9 +40,9 @@ class Transaction {
     });
   }
 
-  static validateStandardTransaction({ transaction }) {
+  static validateStandardTransaction({ state, transaction }) {
     return new Promise((resolve, reject) => {
-      const { id, from, signature } = transaction;
+      const { id, from, signature, value, to } = transaction;
       const transactionData = { ...transaction };
       delete transactionData.signature;
 
@@ -52,6 +52,22 @@ class Transaction {
         signature
       })) {
         return reject(new Error(`Transaction ${id} signature is invalid`));
+      }
+
+      const fromBalance = state.getAccount({ address: from }).balance;
+
+      if (value > fromBalance) {
+        return reject(new Error(
+          `Transaction value: ${value} exceeds balance: ${fromBalance}`
+        ));
+      }
+
+      const toAccount = state.getAccount({ address: to });
+
+      if (!toAccount) {
+        return reject(new Error(
+          `The to field: ${to} does not exist`
+        ));
       }
 
       return resolve();
@@ -76,6 +92,34 @@ class Transaction {
           ));
         }
       });
+
+      return resolve();
+    });
+  }
+
+  static validateTransactionSeries({ transactionSeries, state }) {
+    return new Promise(async (resolve, reject) => {
+      for (let transaction of transactionSeries) {
+        try {
+          switch (transaction.data.type) {
+            case TRANSACTION_TYPE_MAP.CREATE_ACCOUNT:
+              await Transaction.validateCreateAccountTransaction({
+                transaction
+              });
+              break;
+            case TRANSACTION_TYPE_MAP.TRANSACT:
+              await Transaction.validateStandardTransaction({
+                state,
+                transaction
+              });
+              break;
+            default:
+              break;
+          } 
+        } catch (error) {
+          return reject(error);
+        }
+      }
 
       return resolve();
     });
