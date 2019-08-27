@@ -76,7 +76,7 @@ class Block {
     return new Block(GENESIS_DATA);
   }
 
-  static validateBlock({ lastBlock, block }) {
+  static validateBlock({ lastBlock, block, state }) {
     return new Promise((resolve, reject) => {
       if (keccakHash(block) === keccakHash(Block.genesis())) {
         return resolve();
@@ -112,7 +112,10 @@ class Block {
         ));
       }
 
-      return resolve();
+      Transaction.validateTransactionSeries({
+        state, transactionSeries: block.transactionSeries
+      }).then(resolve)
+        .catch(reject);
     });
   }
 
