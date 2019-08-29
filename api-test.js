@@ -1,7 +1,7 @@
 const request = require('request');
 
 const { OPCODE_MAP } = require('./interpreter');
-const { STOP, ADD, PUSH } = OPCODE_MAP;
+const { STOP, ADD, PUSH, STORE, LOAD } = OPCODE_MAP;
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -62,7 +62,9 @@ postTransact({})
       postTransactResponse2
     );
 
-    const code = [PUSH, 4, PUSH, 5, ADD, STOP];
+    const key = 'foo';
+    const value = 'bar';
+    const code = [PUSH, value, PUSH, key, STORE, PUSH, key, LOAD, STOP];
 
     return postTransact({ code });
   })
