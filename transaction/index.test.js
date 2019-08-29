@@ -72,6 +72,40 @@ describe('Transaction', () => {
         state
       })).rejects.toMatchObject({ message: /does not exist/ });
     });
+
+    it('does not validate when the gasLimit exceeds the balance', () => {
+      standardTransaction = Transaction.createTransaction({
+        account,
+        to: 'foo-recipient',
+        gasLimit: 9001
+      });
+
+      expect(Transaction.validateStandardTransaction({
+        transaction: standardTransaction,
+        state
+      })).rejects.toMatchObject({ message: /exceeds/ });
+    });
+
+    it('does not validate when the gasUsed for the code exceeds the gasLimit', () => {
+      const codeHash = 'foo-codeHash';
+      const code = ['PUSH', 1, 'PUSH', 2, 'ADD', 'STOP'];
+
+      state.putAccount({
+        address: codeHash,
+        accountData: { code, codeHash }
+      });
+
+      standardTransaction = Transaction.createTransaction({
+        account,
+        to: codeHash,
+        gasLimit: 0
+      });
+
+      expect(Transaction.validateStandardTransaction({
+        transaction: standardTransaction,
+        state
+      })).rejects.toMatchObject({ message: /Transaction needs more gas/ });      
+    });
   });
 
   describe('validateCreateAccountTransaction()', () => {

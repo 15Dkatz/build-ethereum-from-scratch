@@ -28,6 +28,22 @@ const OPCODE_MAP = {
   JUMPI
 };
 
+const OPCODE_GAS_MAP = {
+  STOP: 0,
+  ADD: 1,
+  SUB: 1,
+  MUL: 1,
+  DIV: 1,
+  PUSH: 0,
+  LT: 1,
+  GT: 1,
+  EQ: 1,
+  AND: 1,
+  OR: 1,
+  JUMP: 2,
+  JUMPI: 2
+};
+
 const EXECUTION_COMPLETE = 'Execution complete';
 const EXECUTION_LIMIT = 10000;
 
@@ -58,6 +74,8 @@ class Interpreter {
   runCode(code) {
     this.state.code = code;
 
+    let gasUsed = 0;
+
     while (this.state.programCounter < this.state.code.length) {
       this.state.executionCount++;
 
@@ -68,6 +86,8 @@ class Interpreter {
       }
 
       const opCode = this.state.code[this.state.programCounter];
+
+      gasUsed += OPCODE_GAS_MAP[opCode];
 
       try {
         switch (opCode) {
@@ -124,7 +144,10 @@ class Interpreter {
         }
       } catch (error) {
         if (error.message === EXECUTION_COMPLETE) {
-          return this.state.stack[this.state.stack.length-1];
+          return {
+            result: this.state.stack[this.state.stack.length-1],
+            gasUsed
+          };
         }
 
         throw error;
