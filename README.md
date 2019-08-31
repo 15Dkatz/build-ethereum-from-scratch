@@ -5,7 +5,7 @@ course by David Katz.
 
 #### Take the course here:
 
-[https://www.udemy.com/build-ethereum-from-scratch?couponCode=GITHUB](https://www.udemy.com/draft/2515148/?couponCode=GITHUB)
+[https://www.udemy.com/build-ethereum-from-scratch?couponCode=GITHUB](https://www.udemy.com/build-ethereum-from-scratch?couponCode=GITHUB)
 
 In the course, you will build your own version of Ethereum. Ethereum can be described in two words. It's a:
 
