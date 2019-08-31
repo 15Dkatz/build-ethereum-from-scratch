@@ -1,5 +1,7 @@
 ## Build Ethereum From Scratch - Smart Contracts and More
 
+![Course Logo](course_logo_udemy.png)
+
 This repository accompanies the "Build Ethereum From Scratch - Smart Contracts and More"
 course by David Katz.
 
